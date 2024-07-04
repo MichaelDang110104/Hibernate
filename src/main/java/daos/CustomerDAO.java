@@ -2,6 +2,7 @@ package daos;
 
 import java.util.List;
 
+import org.hibernate.Hibernate;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
@@ -100,6 +101,9 @@ public class CustomerDAO {
 		Transaction t = session.beginTransaction();
 		try {
 			Customer customer = session.get(Customer.class, id);
+			Hibernate.initialize(customer.getCarRentalList());
+	        Hibernate.initialize(customer.getReviewList());
+	        t.commit();
 			return customer;
 		} catch (Exception e) {
 			System.out.println("Error: " + e.getMessage());

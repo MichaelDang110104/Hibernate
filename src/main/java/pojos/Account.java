@@ -1,5 +1,6 @@
 package pojos;
 
+import java.util.Objects;
 import java.util.Set;
 
 import javax.persistence.Column;
@@ -29,7 +30,7 @@ public class Account {
 	@Column(name = "Role")
 	private String role;
 
-	@OneToOne(mappedBy = "account",fetch = FetchType.EAGER,orphanRemoval = true)
+	@OneToOne(mappedBy = "account", fetch = FetchType.EAGER, orphanRemoval = true)
 	private Customer customer;
 
 	public Account() {
@@ -38,7 +39,7 @@ public class Account {
 
 	public Account(String accountName, String role) {
 		super();
-		
+
 		this.accountName = accountName;
 		this.role = role;
 	}
@@ -67,8 +68,6 @@ public class Account {
 		this.role = role;
 	}
 
-	
-
 	public Customer getCustomer() {
 		return customer;
 	}
@@ -83,4 +82,23 @@ public class Account {
 				+ customer + "]";
 	}
 
+	@Override
+	public int hashCode() {
+		return Objects.hash(accountID, accountName, customer, role);
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		Account other = (Account) obj;
+		return accountID == other.accountID && Objects.equals(accountName, other.accountName)
+				&& Objects.equals(customer, other.customer) && Objects.equals(role, other.role);
+	}
+
+	
 }

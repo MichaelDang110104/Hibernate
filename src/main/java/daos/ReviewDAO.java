@@ -57,7 +57,6 @@ public class ReviewDAO {
 		Session session = sessionFactory.openSession();
 		Transaction t = session.beginTransaction();
 		try {
-            t = session.beginTransaction();
             Review carRental = session.get(Review.class, id);
             if (carRental != null) {
                 session.delete(carRental);

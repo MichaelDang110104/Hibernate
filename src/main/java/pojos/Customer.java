@@ -2,6 +2,8 @@ package pojos;
 
 import java.util.Date;
 import java.util.HashSet;
+import java.util.Iterator;
+import java.util.Objects;
 import java.util.Set;
 
 import javax.persistence.Column;
@@ -19,7 +21,6 @@ import javax.persistence.TemporalType;
 
 import org.hibernate.annotations.Cascade;
 import org.hibernate.annotations.CascadeType;
-
 @Entity
 @Table(name = "CUSTOMERS")
 public class Customer {
@@ -54,17 +55,15 @@ public class Customer {
 	@Column(name = "Password",updatable = true)
 	private String password;
 
-	@OneToOne(cascade = javax.persistence.CascadeType.ALL,orphanRemoval = true)
+	@OneToOne(fetch = FetchType.EAGER, cascade = javax.persistence.CascadeType.ALL, orphanRemoval = true)
 	@JoinColumn(name = "AccountID")
 	private Account account;
 	
 	
-	@OneToMany(fetch = FetchType.EAGER)
-	@JoinColumn(name = "CustomerID")
+	@OneToMany(fetch = FetchType.EAGER, mappedBy = "customer")
 	private Set<Review> reviewList = new HashSet<Review>();
 	
-	@OneToMany(fetch =  FetchType.EAGER)
-	@JoinColumn(name = "CustomerID")
+	@OneToMany(fetch = FetchType.EAGER, mappedBy = "customer")
 	private Set<CarRental> carRentalList = new HashSet<CarRental>();
 	
 	public int getAccountID() {
@@ -89,6 +88,42 @@ public class Customer {
 
 	public void setCarRentalList(Set<CarRental> carRentalList) {
 		this.carRentalList = carRentalList;
+	}
+	
+	public void removeCarCarRental(Car car) {
+		for(Iterator<CarRental> iter = carRentalList.iterator(); iter.hasNext(); ) {
+			CarRental carRental = iter.next();
+			if(carRental.getCustomer().customerID == this.customerID && carRental.getCar().getCarId() == car.getCarId()) {
+				iter.remove();
+				carRental.getCar().removeCarRental(carRental);;
+				carRental.setCar(null);
+				carRental.setCustomer(null);
+			}
+		}
+	}
+		
+	public void addCarRental(Car car, Date pickupDate, Date returnDate, double rentPrice, String status) {
+		CarRental carRental = new CarRental(this, car, pickupDate, returnDate, rentPrice, status);
+		carRentalList.add(carRental);
+		car.getCarRentalList().add(carRental);
+	}
+	
+	public void removeCarReview(Car car) {
+		for(Iterator<CarRental> iter = carRentalList.iterator(); iter.hasNext(); ) {
+			CarRental carRental = iter.next();
+			if(carRental.getCustomer().customerID == this.customerID && carRental.getCar().getCarId() == car.getCarId()) {
+				iter.remove();
+				carRental.getCar().getCarRentalList().remove(carRental);
+				carRental.setCar(null);
+				carRental.setCustomer(null);
+			}
+		}
+	}
+		
+	public void addReview(Car car, Integer reviewStar, String comment) {
+		Review review = new Review(this, car, reviewStar, comment);
+		reviewList.add(review);
+		car.getCarReviewList().add(review);
 	}
 
 	public Customer() {
@@ -195,5 +230,30 @@ public class Customer {
 				+ ", birthday=" + birthday + ", identityCard=" + identityCard + ", licenceNumber=" + licenceNumber
 				+ ", licenceDate=" + licenceDate + ", email=" + email + ", password=" + password + "," + "]";
 	}
+
+	@Override
+	public int hashCode() {
+		return Objects.hash(account, birthday, carRentalList, customerID, customerName, email, identityCard,
+				licenceDate, licenceNumber, mobile, password, reviewList);
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		Customer other = (Customer) obj;
+		return Objects.equals(account, other.account) && Objects.equals(birthday, other.birthday)
+				&& Objects.equals(carRentalList, other.carRentalList) && customerID == other.customerID
+				&& Objects.equals(customerName, other.customerName) && Objects.equals(email, other.email)
+				&& Objects.equals(identityCard, other.identityCard) && Objects.equals(licenceDate, other.licenceDate)
+				&& Objects.equals(licenceNumber, other.licenceNumber) && Objects.equals(mobile, other.mobile)
+				&& Objects.equals(password, other.password) && Objects.equals(reviewList, other.reviewList);
+	}
+	
+	
 
 }

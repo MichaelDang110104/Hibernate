@@ -59,7 +59,6 @@ public class CarRentalDAO {
 		Session session = sessionFactory.openSession();
 		Transaction t = session.beginTransaction();
 		try {
-            t = session.beginTransaction();
             CarRental carRental = session.get(CarRental.class, id);
             if (carRental != null) {
                 session.delete(carRental);

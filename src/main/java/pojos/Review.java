@@ -15,16 +15,14 @@ import javax.persistence.Table;
 public class Review {
 
 	@EmbeddedId
-	private CarRentalKey id;
+	private ReviewKey id;
 	
-	@ManyToOne
+	@ManyToOne(fetch = FetchType.LAZY)
 	@MapsId("customerId")
-	@JoinColumn(name = "CustomerID", nullable = false)
 	private Customer customer;
 
-	@ManyToOne
+	@ManyToOne(fetch = FetchType.LAZY)
 	@MapsId("carId")
-	@JoinColumn(name = "CarID", nullable = false)
 	private Car car;
 
     @Column(name = "ReviewStar", nullable = false)
@@ -35,16 +33,29 @@ public class Review {
 
     
     
-	public CarRentalKey getId() {
+	public ReviewKey getId() {
 		return id;
 	}
 
-	public void setId(CarRentalKey id) {
+	public void setId(ReviewKey id) {
 		this.id = id;
 	}
+	
+	public Review(Customer cus, Car car) {
+		this.car = car;
+		this.customer = cus;
+		this.id = new ReviewKey(cus.getCustomerID(), car.getCarId());
+		// TODO Auto-generated constructor stub
+	}
+	
+	public Review() {
+		// TODO Auto-generated constructor stub
+	}
 
-	public Review( Integer reviewStar, String comment) {
-		super();
+	public Review(Customer cus, Car car, Integer reviewStar, String comment) {
+		this.car = car;
+		this.customer = cus;
+		this.id = new ReviewKey(cus.getCustomerID(), car.getCarId());
 		this.reviewStar = reviewStar;
 		this.comment = comment;
 	}

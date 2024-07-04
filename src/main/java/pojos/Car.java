@@ -2,6 +2,7 @@ package pojos;
 
 import java.util.Date;
 import java.util.HashSet;
+import java.util.Iterator;
 import java.util.Set;
 
 import javax.persistence.CascadeType;
@@ -55,12 +56,10 @@ public class Car {
 	@Column(name = "Status", nullable = false)
 	private String status;
 
-	@OneToMany(fetch = FetchType.EAGER)
-	@JoinColumn(name = "CarID")
+	@OneToMany(fetch = FetchType.EAGER, mappedBy = "car", orphanRemoval = true)
 	private Set<CarRental> carRentalList = new HashSet<CarRental>();
 
-	@OneToMany(fetch = FetchType.EAGER)
-	@JoinColumn(name = "CarID")
+	@OneToMany(fetch = FetchType.EAGER, mappedBy = "car", orphanRemoval = true)
 	private Set<Review> carReviewList = new HashSet<Review>();
 
 	public int getProducerId() {
@@ -80,6 +79,16 @@ public class Car {
 		return carRentalList;
 	}
 
+	public void removeCarRental(CarRental carRental) {
+		for(Iterator<CarRental> iter = carRentalList.iterator(); iter.hasNext(); ) {
+			CarRental it = iter.next();
+			if(it.getId().getCustomerId() == carRental.getId().getCustomerId() && it.getId().getCarId() == carRental.getId().getCarId()) {
+				iter.remove();
+			}
+		}
+	}
+	
+	
 	public void setCarRentalList(Set<CarRental> carRentalList) {
 		this.carRentalList = carRentalList;
 	}
@@ -91,8 +100,6 @@ public class Car {
 	public void setCarReviewList(Set<Review> carReviewList) {
 		this.carReviewList = carReviewList;
 	}
-
-
 
 	public Car(String carName, Integer carModelYear, String color, Integer capacity, String description,
 			Date importDate, CarProducer producer, double rentPrice, String status) {

@@ -5,6 +5,7 @@ import java.util.Date;
 import javax.persistence.Column;
 import javax.persistence.EmbeddedId;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -20,17 +21,17 @@ import javax.persistence.TemporalType;
 public class CarRental {
 	
 	@EmbeddedId
-	private CarRentalKey id;
-	
-	@ManyToOne
-	@MapsId("customerId")
-	@JoinColumn(name = "CustomerID", nullable = false)
-	private Customer customer;
+    private CarRentalKey id;
 
-	@ManyToOne
-	@MapsId("carId")
-	@JoinColumn(name = "CarID", nullable = false)
-	private Car car;
+    @ManyToOne
+    @MapsId("carId")
+    @JoinColumn(name = "CarID")
+    private Car car;
+
+    @ManyToOne
+    @MapsId("customerId")
+    @JoinColumn(name = "CustomerID")
+    private Customer customer;
 
 	@Column(name = "PickupDate", nullable = false)
 	@Temporal(TemporalType.DATE)
@@ -46,7 +47,39 @@ public class CarRental {
 	@Column(name = "Status", nullable = false)
 	private String status;
 	
+	public CarRental(Customer cus, Car car) {
+		this.car = car;
+		this.customer = cus;
+		this.id = new CarRentalKey(cus.getCustomerID(), car.getCarId());
+		// TODO Auto-generated constructor stub
+	}
 	
+	public CarRental(Customer cus, Car car, Date pickupDate, Date returnDate, double rentPrice, String status) {
+		this.car = car;
+		this.customer = cus;
+		this.id = new CarRentalKey(cus.getCustomerID(), car.getCarId());
+		this.pickupDate = pickupDate;
+		this.returnDate = returnDate;
+		this.rentPrice = rentPrice;
+		this.status = status;
+	}
+	
+	public CarRental() {
+        // Default constructor required by Hibernate
+    }
+	
+
+	public CarRental(CarRentalKey id, Car car, Customer customer, Date pickupDate, Date returnDate, double rentPrice,
+			String status) {
+		super();
+		this.id = id;
+		this.car = car;
+		this.customer = customer;
+		this.pickupDate = pickupDate;
+		this.returnDate = returnDate;
+		this.rentPrice = rentPrice;
+		this.status = status;
+	}
 
 	public CarRentalKey getId() {
 		return id;
@@ -117,5 +150,4 @@ public class CarRental {
 		return "CarRental [customer=" + customer + ", car=" + car + ", pickupDate=" + pickupDate + ", returnDate="
 				+ returnDate + ", rentPrice=" + rentPrice + ", status=" + status + "]";
 	}
-
 }
