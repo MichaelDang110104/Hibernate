@@ -97,7 +97,21 @@ public class Review {
 		return "Review [customer=" + customer + ", car=" + car + ", reviewStar=" + reviewStar + ", comment=" + comment
 				+ "]";
 	}
+	
+	public int getCustomerId() {
+		if(customer != null) {
+			return customer.getCustomerID();
+		}else {
+			return 0;
+		}
+	}
+	
+	public int getCarId() {
+		if(car != null) {
+			return car.getCarId();
+		}else {
+			return 0;
+		}
+	}
     
-    
-
 }
