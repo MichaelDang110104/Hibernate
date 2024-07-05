@@ -195,11 +195,11 @@ public class Car {
 		this.status = status;
 	}
 
-	@Override
-	public String toString() {
-		return "Car [carId=" + carId + ", carName=" + carName + ", carModelYear=" + carModelYear + ", color=" + color
-				+ ", capacity=" + capacity + ", description=" + description + ", importDate=" + importDate
-				+ ", producer=" + producer + ", rentPrice=" + rentPrice + ", status=" + status + "]";
-	}
+//	@Override
+//	public String toString() {
+//		return "Car [carId=" + carId + ", carName=" + carName + ", carModelYear=" + carModelYear + ", color=" + color
+//				+ ", capacity=" + capacity + ", description=" + description + ", importDate=" + importDate
+//				+ ", producer=" + producer + ", rentPrice=" + rentPrice + ", status=" + status + "]";
+//	}
 
 }

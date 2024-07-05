@@ -54,6 +54,24 @@ public class CarRental {
 		// TODO Auto-generated constructor stub
 	}
 	
+	public int getCustomerID() {
+		if(customer != null) {
+			int customerID = customer.getCustomerID();
+			return customerID;
+		}
+		return 0;
+	}
+	
+	public int getCarID() {
+		if(customer != null) {
+			int carID = car.getCarId();
+			return carID;
+		}
+		return 0;
+	}
+	
+	
+	
 	public CarRental(Customer cus, Car car, Date pickupDate, Date returnDate, double rentPrice, String status) {
 		this.car = car;
 		this.customer = cus;
@@ -145,9 +163,9 @@ public class CarRental {
 		this.status = status;
 	}
 
-	@Override
-	public String toString() {
-		return "CarRental [customer=" + customer + ", car=" + car + ", pickupDate=" + pickupDate + ", returnDate="
-				+ returnDate + ", rentPrice=" + rentPrice + ", status=" + status + "]";
-	}
+//	@Override
+//	public String toString() {
+//		return "CarRental [customer=" + customer + ", car=" + car + ", pickupDate=" + pickupDate + ", returnDate="
+//				+ returnDate + ", rentPrice=" + rentPrice + ", status=" + status + "]";
+//	}
 }

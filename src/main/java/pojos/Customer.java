@@ -224,18 +224,18 @@ public class Customer {
 		this.account = account;
 	}
 
-	@Override
-	public String toString() {
-		return "Customer [customerID=" + customerID + ", customerName=" + customerName + ", mobile=" + mobile
-				+ ", birthday=" + birthday + ", identityCard=" + identityCard + ", licenceNumber=" + licenceNumber
-				+ ", licenceDate=" + licenceDate + ", email=" + email + ", password=" + password + "," + "]";
-	}
+//	@Override
+//	public String toString() {
+//		return "Customer [customerID=" + customerID + ", customerName=" + customerName + ", mobile=" + mobile
+//				+ ", birthday=" + birthday + ", identityCard=" + identityCard + ", licenceNumber=" + licenceNumber
+//				+ ", licenceDate=" + licenceDate + ", email=" + email + ", password=" + password + "," + "]";
+//	}
 
-	@Override
-	public int hashCode() {
-		return Objects.hash(account, birthday, carRentalList, customerID, customerName, email, identityCard,
-				licenceDate, licenceNumber, mobile, password, reviewList);
-	}
+//	@Override
+//	public int hashCode() {
+//		return Objects.hash(account, birthday, carRentalList, customerID, customerName, email, identityCard,
+//				licenceDate, licenceNumber, mobile, password, reviewList);
+//	}
 
 	@Override
 	public boolean equals(Object obj) {
