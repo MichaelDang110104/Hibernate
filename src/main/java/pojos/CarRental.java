@@ -69,12 +69,14 @@ public class CarRental {
 	}
 
 	public int getCarID() {
-		if(customer != null) {
+		if(car != null) {
 			int carID = car.getCarId();
 			return carID;
 		}
 		return 0;
 	}
+
+
 
 
 
