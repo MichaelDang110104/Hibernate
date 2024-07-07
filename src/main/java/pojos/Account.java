@@ -87,18 +87,6 @@ public class Account {
 		return Objects.hash(accountID, accountName, customer, role);
 	}
 
-	@Override
-	public boolean equals(Object obj) {
-		if (this == obj)
-			return true;
-		if (obj == null)
-			return false;
-		if (getClass() != obj.getClass())
-			return false;
-		Account other = (Account) obj;
-		return accountID == other.accountID && Objects.equals(accountName, other.accountName)
-				&& Objects.equals(customer, other.customer) && Objects.equals(role, other.role);
-	}
-
+	
 	
 }

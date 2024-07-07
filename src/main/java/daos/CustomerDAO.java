@@ -1,3 +1,4 @@
+
 package daos;
 
 import java.util.List;
@@ -48,6 +49,10 @@ public class CustomerDAO {
 			session.clear();
 			if(session.contains(customer)) {
 				session.evict(customer);
+			}
+			Account account = customer.getAccount();
+			if(account != null) {
+				session.update(account);
 			}
 			session.update(customer);
 			t.commit();

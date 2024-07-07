@@ -237,22 +237,7 @@ public class Customer {
 //				licenceDate, licenceNumber, mobile, password, reviewList);
 //	}
 
-	@Override
-	public boolean equals(Object obj) {
-		if (this == obj)
-			return true;
-		if (obj == null)
-			return false;
-		if (getClass() != obj.getClass())
-			return false;
-		Customer other = (Customer) obj;
-		return Objects.equals(account, other.account) && Objects.equals(birthday, other.birthday)
-				&& Objects.equals(carRentalList, other.carRentalList) && customerID == other.customerID
-				&& Objects.equals(customerName, other.customerName) && Objects.equals(email, other.email)
-				&& Objects.equals(identityCard, other.identityCard) && Objects.equals(licenceDate, other.licenceDate)
-				&& Objects.equals(licenceNumber, other.licenceNumber) && Objects.equals(mobile, other.mobile)
-				&& Objects.equals(password, other.password) && Objects.equals(reviewList, other.reviewList);
-	}
+	
 	
 	
 
